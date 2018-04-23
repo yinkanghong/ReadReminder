@@ -1,0 +1,53 @@
+<div id="page"></div>
+
+
+<script>
+    var addUrlParam = function (search, key, val) {
+        var newParam = key + '=' + val, params = '?' + newParam;
+        // If the "search" string exists, then build params from it
+        if (search) {
+            // Try to replace an existance instance
+            params = search.replace(new RegExp('([?&])' + key + '[^&]*'), '$1' + newParam);
+            // If nothing was replaced, then add the new param to the end
+            if (params === search) {
+                params += '&' + newParam;
+            }
+        }
+        return params;
+    };
+
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage, layer = layui.layer;
+        var current_page = {{ page_obj.number }};
+        //调用分页
+        laypage.render({
+            elem: 'page'
+            , count: {{ page_obj.paginator.object_list.count }}
+            , limit:{{ page_obj.paginator.per_page }}
+            , curr: current_page
+            , prev: '<em>&laquo;</em>'
+            , next: '<em>&raquo;</em>'
+            , layout: ['count', 'prev', 'page', 'next', 'skip']
+            , jump: function (obj, first) {
+                if (obj.curr != current_page) {
+                    location.replace(addUrlParam(document.location.search, 'page', obj.curr));
+                }
+            }
+        });
+    });
+
+    function skipPage(e) {
+        if (e.which == 13 || e.keyCode == 13) {
+            var page_input = $("#page_input").val();
+            if (page_input <= {{ page_obj.paginator.num_pages }}) {
+                location.replace(addUrlParam(document.location.search, 'page', page_input));
+            } else {
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.msg('页码不可大于' +{{ page_obj.paginator.num_pages }});
+                });
+            }
+            return false;
+        }
+    }
+</script>

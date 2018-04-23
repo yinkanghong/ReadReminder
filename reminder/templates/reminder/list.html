@@ -1,0 +1,27 @@
+{% extends 'reminder/base.html' %}
+
+{% block main %}
+    <div class="layui-container">
+        <table class="layui-table" lay-skin="line">
+            <colgroup>
+                <col>
+            </colgroup>
+            <tbody>
+            {% for chapter in chapter_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'chapter_detail' chapter.id %}">
+                            {{ chapter.order }}&nbsp;{{ chapter.name|default_if_none:'' }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% include 'pagination.html' %}
+    </div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
