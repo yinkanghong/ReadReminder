@@ -144,13 +144,15 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': DJANGO_LOG_PATH,
-            'formatter': 'standard'
+            'formatter': 'standard',
+            'encoding': 'utf8'
         },
         'info': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': INFO_LOG_PATH,
-            'formatter': 'standard'
+            'formatter': 'standard',
+            'encoding': 'utf8'
         },
         'console': {
             'level': 'DEBUG',

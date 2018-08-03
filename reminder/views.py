@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import *
 import logging
@@ -6,18 +7,13 @@ import logging
 logger = logging.getLogger("info")
 
 
-class ChapterListViewView(ListView):
+class ChapterListViewView(LoginRequiredMixin, ListView):
     model = Chapter
     paginate_by = 12
     template_name = 'reminder/list.html'
 
-    def get_context_data(self, **kwargs):
-        logger.info('中文测试')
-        logger.info('English text')
-        return super(ChapterListViewView, self).get_context_data(**kwargs)
 
-
-class ChapterDetailView(DetailView):
+class ChapterDetailView(LoginRequiredMixin, DetailView):
     model = Chapter
     template_name = 'reminder/detail.html'
     slug_field = 'id'
