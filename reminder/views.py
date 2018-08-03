@@ -11,12 +11,14 @@ class ChapterListViewView(LoginRequiredMixin, ListView):
     model = Chapter
     paginate_by = 12
     template_name = 'reminder/list.html'
+    raise_exception = True
 
 
 class ChapterDetailView(LoginRequiredMixin, DetailView):
     model = Chapter
     template_name = 'reminder/detail.html'
     slug_field = 'id'
+    raise_exception = True
 
     def get_context_data(self, **kwargs):
         queryset = self.get_queryset()
